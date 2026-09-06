@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De la información humana a la Inteligencia Artificial</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #07111f;
+      color: white;
+      line-height: 1.6;
+    }
+    header {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      background:
+        radial-gradient(circle at top, #193b66, #07111f 65%);
+    }
+    header h1 {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      max-width: 1000px;
+      line-height: 1;
+      margin-bottom: 25px;
+    }
+    header p {
+      max-width: 800px;
+      color: #b9c8dc;
+      font-size: 1.15rem;
+    }
+    .boton {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 24px;
+      border-radius: 30px;
+      background: #4cc9f0;
+      color: #06101c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .boton:hover {
+      transform: scale(1.05);
+    }
+    .barra {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px;
+      background: rgba(5, 12, 24, 0.94);
+      border-bottom: 1px solid #29405f;
+      text-align: center;
+    }
+    .barra input {
+      width: min(600px, 90%);
+      padding: 12px 16px;
+      border-radius: 20px;
+      border: 1px solid #405775;
+      background: #0d1a2d;
+      color: white;
+      font-size: 1rem;
+    }
+    .contenedor {
+      max-width: 1100px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    .introduccion {
+      background: #101e33;
+      border: 1px solid #293f5e;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 60px;
+    }
+    .introduccion h2 {
+      margin-bottom: 15px;
+      color: #4cc9f0;
+    }
+    .cadena {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #dbeafe;
+    }
+    .evento {
+      position: relative;
+      margin-bottom: 40px;
+      padding-left: 70px;
+    }
+    .evento::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 0;
+      bottom: -40px;
+      width: 3px;
+      background: #4cc9f0;
+    }
+    .numero {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #07111f;
+      border: 3px solid #4cc9f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #4cc9f0;
+      font-weight: bold;
+      z-index: 2;
+    }
+    .tarjeta {
+      background: #101e33;
+      border: 1px solid #293f5e;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: .3s;
+    }
+    .tarjeta:hover {
+      transform: translateY(-5px);
+      border-color: #4cc9f0;
+    }
+    .imagen {
+      height: 220px;
+      background:
+        linear-gradient(135deg, #183657, #0b1728);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 4rem;
+      color: #4cc9f0;
+    }
+    .contenido {
+      padding: 25px;
+    }
+    .fecha {
+      color: #4cc9f0;
+      font-weight: bold;
+    }
+    .contenido h2 {
+      margin: 5px 0 10px;
+      font-size: 1.7rem;
+    }
+    .personajes {
+      color: #d5dfed;
+      margin-bottom: 20px;
+    }
+    .datos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .dato {
+      background: #0a1628;
+      border: 1px solid #253a56;
+      padding: 15px;
+      border-radius: 12px;
+    }
+    .dato strong {
+      display: block;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    .dato span {
+      color: #aebdd1;
+    }
+    .enlaces {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .enlaces a {
+      padding: 8px 12px;
+      border: 1px solid #38516f;
+      border-radius: 10px;
+      color: #4cc9f0;
+      text-decoration: none;
+      font-size: .9rem;
+    }
+    .ia {
+      margin-top: 70px;
+      padding: 30px;
+      border: 1px dashed #8b5cf6;
+      border-radius: 20px;
+      background: #17132d;
+    }
+    .ia h2 {
+      color: #c4b5fd;
+      margin-bottom: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 50px 20px;
+      color: #8fa1b8;
+      border-top: 1px solid #243750;
+    }
+    .oculto {
+      display: none;
+    }
+    @media(max-width:700px) {
+      .datos {
+        grid-template-columns: 1fr;
+      }
+      .evento {
+        padding-left: 60px;
+      }
+      .evento::before {
+        left: 18px;
+      }
+      .numero {
+        width: 42px;
+        height: 42px;
+      }
+      .imagen {
+        height: 170px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>De la información humana a la Inteligencia Artificial</h1>
+  <p>
+    Evolución de la información, el cálculo, la automatización,
+    la programación, la computación electrónica, Internet y la
+    Inteligencia Artificial.
+  </p>
+  <a class="boton" href="#timeline">
+    Explorar la línea del tiempo ↓
+  </a>
+</header>
+<div class="barra">
+  <input
+    id="buscador"
+    type="search"
+    placeholder="Buscar acontecimiento, personaje o fecha..."
+  >
+</div>
+<main class="contenedor" id="timeline">
+<section class="introduccion">
+  <h2>La evolución tecnológica</h2>
+  <p>
+    La historia de la computación no comenzó con las computadoras
+    modernas. Surgió de la necesidad humana de conservar información,
+    comunicarse, realizar cálculos y automatizar tareas.
+  </p>
+  <p class="cadena">
+    Información humana → Escritura → Cálculo → Automatización →
+    Programación → Computación electrónica → Transistor →
+    Circuito integrado → Microprocesador → PC → Internet →
+    World Wide Web → Móvil y nube → Inteligencia Artificial
+  </p>
+</section>
+<!-- EVENTO 1 -->
+<article class="evento">
+  <div class="fecha">c. 40,000 a.C.</div>
+  <div class="tarjeta">
+    <span class="categoria">Comunicación</span>
+    <h2>Comunicación simbólica humana</h2>
+    <p><strong>Personajes:</strong> Comunidades humanas prehistóricas</p>
+
+    <p>
+      Los seres humanos comenzaron a representar ideas, experiencias y
+      acontecimientos mediante pinturas rupestres, símbolos y otras formas
+      de comunicación visual.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Símbolos, pinturas rupestres y comunicación visual.</p>
+
+    <p>
+      <strong>Importancia:</strong> Fue uno de los primeros pasos para almacenar
+      y transmitir información más allá de la memoria humana.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La necesidad de conservar y
+      transmitir información impulsó posteriormente la escritura y otros
+      sistemas de almacenamiento de datos.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=pinturas+rupestres+historia"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Cave_paintings"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 2 -->
+<article class="evento">
+  <div class="fecha">c. 3200 a.C.</div>
+  <div class="tarjeta">
+    <span class="categoria">Escritura</span>
+    <h2>Nacimiento de la escritura cuneiforme</h2>
+    <p><strong>Personajes:</strong> Escribas de Mesopotamia</p>
+
+    <p>
+      En Mesopotamia apareció la escritura cuneiforme, uno de los primeros
+      sistemas conocidos de escritura. Se realizaba principalmente sobre
+      tablillas de arcilla utilizando marcas con forma de cuña.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Escritura sobre tablillas de arcilla.</p>
+
+    <p>
+      <strong>Importancia:</strong> Permitió registrar información económica,
+      administrativa, religiosa y social de manera permanente.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> El almacenamiento escrito de
+      información fue un antecedente fundamental para todos los sistemas
+      posteriores de registro y procesamiento de datos.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=escritura+cuneiforme+mesopotamia"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Cuneiform"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.britishmuseum.org/blog/how-write-cuneiform"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 3 -->
+<article class="evento">
+  <div class="fecha">c. 2400–2000 a.C.</div>
+  <div class="tarjeta">
+    <span class="categoria">Cálculo</span>
+    <h2>El ábaco: cálculo asistido</h2>
+    <p><strong>Personajes:</strong> Diversas culturas antiguas</p>
+
+    <p>
+      El ábaco permitió realizar operaciones matemáticas utilizando fichas,
+      cuentas o piezas que representaban cantidades.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Instrumento mecánico para facilitar cálculos.</p>
+
+    <p>
+      <strong>Importancia:</strong> Separó parcialmente el cálculo de la
+      capacidad de memoria del ser humano y permitió realizar operaciones
+      de forma más rápida y organizada.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Representa un antecedente de las
+      calculadoras mecánicas y de las máquinas diseñadas posteriormente para
+      automatizar operaciones matemáticas.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=historia+del+abaco"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Abaci"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 4 -->
+<article class="evento">
+  <div class="fecha">c. 1450</div>
+  <div class="tarjeta">
+    <span class="categoria">Imprenta</span>
+    <h2>La imprenta de tipos móviles</h2>
+    <p><strong>Personaje:</strong> Johannes Gutenberg</p>
+
+    <p>
+      Johannes Gutenberg desarrolló en Europa un sistema de impresión basado
+      en tipos móviles metálicos, que permitió producir grandes cantidades
+      de textos con mayor rapidez.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Tipos móviles e impresión mecánica.</p>
+
+    <p>
+      <strong>Importancia:</strong> La producción de libros se hizo mucho más
+      rápida y accesible, favoreciendo la difusión del conocimiento.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La capacidad de reproducir
+      información a gran escala ayudó a acelerar la educación, la ciencia
+      y el desarrollo tecnológico.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Gutenberg+imprenta+historia"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Johannes_Gutenberg"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 5 -->
+<article class="evento">
+  <div class="fecha">1642</div>
+  <div class="tarjeta">
+    <span class="categoria">Computación mecánica</span>
+    <h2>La Pascalina</h2>
+    <p><strong>Personaje:</strong> Blaise Pascal</p>
+
+    <p>
+      Blaise Pascal construyó una máquina mecánica capaz de realizar
+      operaciones aritméticas mediante ruedas y engranajes.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Calculadora mecánica.</p>
+
+    <p>
+      <strong>Importancia:</strong> Demostró que algunas operaciones
+      matemáticas podían ser realizadas mediante mecanismos automáticos,
+      reduciendo el trabajo manual.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Las calculadoras mecánicas
+      fueron precursoras de máquinas más complejas capaces de automatizar
+      cálculos.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Pascalina+Blaise+Pascal"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Pascaline"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article><!-- EVENTO 6 -->
+<article class="evento">
+  <div class="fecha">1673–1694</div>
+  <div class="tarjeta">
+    <span class="categoria">Cálculo mecánico</span>
+    <h2>La Stepped Reckoner</h2>
+    <p><strong>Personaje:</strong> Gottfried Wilhelm Leibniz</p>
+
+    <p>
+      Leibniz desarrolló una calculadora mecánica capaz de realizar
+      operaciones como suma, resta, multiplicación y división.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Máquina calculadora mecánica.</p>
+
+    <p>
+      <strong>Importancia:</strong> Representó un avance importante hacia
+      máquinas capaces de automatizar operaciones matemáticas más complejas.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La automatización del cálculo
+      sería uno de los principios fundamentales de las futuras computadoras.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Leibniz+Stepped+Reckoner"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Stepped_Reckoner"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 7 -->
+<article class="evento">
+  <div class="fecha">1804</div>
+  <div class="tarjeta">
+    <span class="categoria">Automatización</span>
+    <h2>Telar de Jacquard y tarjetas perforadas</h2>
+    <p><strong>Personaje:</strong> Joseph Marie Jacquard</p>
+
+    <p>
+      Jacquard creó un telar que utilizaba tarjetas perforadas para controlar
+      automáticamente los patrones de tejido.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Tarjetas perforadas para controlar una máquina.</p>
+
+    <p>
+      <strong>Importancia:</strong> Demostró que una máquina podía seguir
+      instrucciones codificadas mediante un sistema externo.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La idea de utilizar tarjetas
+      perforadas para representar instrucciones influyó posteriormente en
+      máquinas de cálculo y sistemas informáticos.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Jacquard+loom+punched+cards"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Jacquard_looms"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 8 -->
+<article class="evento">
+  <div class="fecha">1822</div>
+  <div class="tarjeta">
+    <span class="categoria">Computación mecánica</span>
+    <h2>La Máquina Diferencial</h2>
+    <p><strong>Personaje:</strong> Charles Babbage</p>
+
+    <p>
+      Charles Babbage diseñó una máquina mecánica destinada a calcular
+      automáticamente tablas matemáticas mediante el método de diferencias.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Cálculo automático mediante engranajes.</p>
+
+    <p>
+      <strong>Importancia:</strong> Fue uno de los primeros diseños de una
+      máquina especializada para automatizar cálculos matemáticos.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Los trabajos de Babbage
+      prepararon el camino para su posterior Máquina Analítica, considerada
+      un antecedente conceptual de la computadora moderna.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Charles+Babbage+Difference+Engine"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Difference_Engine"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.computerhistory.org/babbage/history"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 9 -->
+<article class="evento">
+  <div class="fecha">1834–1843</div>
+  <div class="tarjeta">
+    <span class="categoria">Programación</span>
+    <h2>La Máquina Analítica y el primer algoritmo para una máquina</h2>
+    <p><strong>Personajes:</strong> Charles Babbage y Ada Lovelace</p>
+
+    <p>
+      Babbage diseñó la Máquina Analítica, una máquina programable que
+      incorporaba conceptos similares a una unidad de cálculo, memoria,
+      entrada y salida.
+    </p>
+
+    <p>
+      Ada Lovelace escribió notas sobre la máquina e incluyó un algoritmo
+      destinado a ser procesado por ella.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Máquina programable y algoritmo.</p>
+
+    <p>
+      <strong>Importancia:</strong> La idea de separar las instrucciones de
+      la máquina anticipó uno de los conceptos fundamentales de la programación.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La programación sería esencial
+      para las computadoras electrónicas y, posteriormente, para la inteligencia
+      artificial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Ada+Lovelace+Analytical+Engine"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Ada_Lovelace"
+         target="_blank">🖼️ Ada Lovelace</a>
+
+      <a href="https://www.computerhistory.org/babbage/history"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 10 -->
+<article class="evento">
+  <div class="fecha">1854</div>
+  <div class="tarjeta">
+    <span class="categoria">Lógica</span>
+    <h2>El álgebra de Boole</h2>
+    <p><strong>Personaje:</strong> George Boole</p>
+
+    <p>
+      George Boole desarrolló un sistema matemático para representar
+      razonamientos mediante valores y operaciones lógicas.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Lógica booleana.</p>
+
+    <p>
+      <strong>Importancia:</strong> Sus ideas permitieron representar
+      operaciones lógicas de una manera matemática.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La lógica booleana se convirtió
+      en una base fundamental de los circuitos digitales y de la computación
+      moderna.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=George+Boole+algebra+booleana"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:George_Boole"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article><!-- EVENTO 11 -->
+<article class="evento">
+  <div class="fecha">1890</div>
+  <div class="tarjeta">
+    <span class="categoria">Procesamiento de datos</span>
+    <h2>El tabulador de tarjetas perforadas</h2>
+    <p><strong>Personaje:</strong> Herman Hollerith</p>
+
+    <p>
+      Herman Hollerith desarrolló una máquina que utilizaba tarjetas perforadas
+      para almacenar y procesar información. Su sistema fue utilizado para
+      acelerar el procesamiento del censo de Estados Unidos.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Tarjetas perforadas y procesamiento automático de datos.</p>
+
+    <p>
+      <strong>Importancia:</strong> Mostró que grandes cantidades de información
+      podían ser procesadas mecánicamente de manera mucho más rápida.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La tecnología de tarjetas
+      perforadas influyó en el desarrollo de sistemas de procesamiento de
+      datos y en las primeras computadoras.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Herman+Hollerith+tabulating+machine"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Herman_Hollerith"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.ibm.com/history/punched-card"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 12 -->
+<article class="evento">
+  <div class="fecha">1936</div>
+  <div class="tarjeta">
+    <span class="categoria">Computación teórica</span>
+    <h2>La máquina de Turing y la computabilidad</h2>
+    <p><strong>Personaje:</strong> Alan Turing</p>
+
+    <p>
+      Alan Turing presentó el concepto teórico de una máquina capaz de
+      ejecutar instrucciones siguiendo reglas precisas. Su trabajo ayudó
+      a definir qué problemas podían ser resueltos mediante procedimientos
+      computacionales.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Modelo matemático de computación y algoritmo.</p>
+
+    <p>
+      <strong>Importancia:</strong> Estableció fundamentos teóricos esenciales
+      para comprender qué significa "computar" información.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Sus ideas influyeron directamente
+      en la teoría de la computación y en el desarrollo posterior de las
+      computadoras y la inteligencia artificial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Alan+Turing+Turing+machine"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Alan_Turing"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 13 -->
+<article class="evento">
+  <div class="fecha">1943–1944</div>
+  <div class="tarjeta">
+    <span class="categoria">Computación electrónica</span>
+    <h2>Colossus y el procesamiento electrónico de señales</h2>
+    <p><strong>Personaje:</strong> Tommy Flowers y equipos de Bletchley Park</p>
+
+    <p>
+      Colossus fue una familia de máquinas electrónicas desarrolladas durante
+      la Segunda Guerra Mundial para ayudar a analizar comunicaciones cifradas.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Válvulas electrónicas y procesamiento
+      electrónico de información.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Demostró el potencial de utilizar circuitos
+      electrónicos para procesar información a gran velocidad.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> El procesamiento electrónico
+      abrió el camino hacia las computadoras electrónicas de propósito general.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Colossus+computer+Tommy+Flowers"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Colossus_computer"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 14 -->
+<article class="evento">
+  <div class="fecha">1945–1949</div>
+  <div class="tarjeta">
+    <span class="categoria">Arquitectura informática</span>
+    <h2>La arquitectura de programa almacenado</h2>
+    <p><strong>Personajes:</strong> John von Neumann y equipos de desarrollo de EDVAC e IAS</p>
+
+    <p>
+      Se consolidó la idea de almacenar en la memoria tanto los datos como
+      las instrucciones que una computadora debía ejecutar.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Arquitectura de programa almacenado.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Permitió que una misma máquina pudiera
+      ejecutar diferentes programas sin tener que ser reconstruida físicamente
+      para cada tarea.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Este principio se convirtió
+      en una base de gran parte de las computadoras digitales modernas.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=von+Neumann+stored+program+architecture"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:John_von_Neumann"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 15 -->
+<article class="evento">
+  <div class="fecha">1946</div>
+  <div class="tarjeta">
+    <span class="categoria">Computadora electrónica</span>
+    <h2>ENIAC: una de las primeras computadoras electrónicas de propósito general</h2>
+    <p>
+      <strong>Personajes:</strong> J. Presper Eckert, John Mauchly y las
+      programadoras de ENIAC
+    </p>
+
+    <p>
+      ENIAC fue una enorme computadora electrónica desarrollada en Estados
+      Unidos. Utilizaba miles de tubos de vacío para realizar cálculos
+      numéricos a gran velocidad.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Computación electrónica de propósito general.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Representó un salto enorme respecto a las
+      máquinas mecánicas y electromecánicas anteriores.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Las computadoras electrónicas
+      establecieron la base tecnológica para las generaciones posteriores de
+      computadoras digitales.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=ENIAC+computer+history"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:ENIAC"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.computerhistory.org/timeline/computers/"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article><!-- EVENTO 16 -->
+<article class="evento">
+  <div class="fecha">1947</div>
+  <div class="tarjeta">
+    <span class="categoria">Electrónica</span>
+    <h2>La invención del transistor</h2>
+    <p><strong>Personajes:</strong> John Bardeen, Walter Brattain y William Shockley</p>
+
+    <p>
+      En los laboratorios Bell se desarrolló el transistor, un dispositivo
+      semiconductor capaz de amplificar y controlar señales eléctricas.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Transistor semiconductor.</p>
+
+    <p>
+      <strong>Importancia:</strong> Permitió reemplazar los grandes y frágiles
+      tubos de vacío por componentes mucho más pequeños, eficientes y confiables.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Los transistores hicieron posible
+      construir circuitos electrónicos cada vez más pequeños y fueron
+      fundamentales para el desarrollo de los circuitos integrados y
+      microprocesadores.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=inventor+transistor+1947"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Transistors"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 17 -->
+<article class="evento">
+  <div class="fecha">1956</div>
+  <div class="tarjeta">
+    <span class="categoria">Inteligencia artificial</span>
+    <h2>Nace formalmente la Inteligencia Artificial</h2>
+    <p>
+      <strong>Personajes:</strong> John McCarthy, Marvin Minsky,
+      Nathaniel Rochester y Claude Shannon
+    </p>
+
+    <p>
+      Durante el proyecto de investigación de Dartmouth de 1956 se utilizó
+      formalmente el término "inteligencia artificial" para describir el
+      estudio de cómo hacer que las máquinas realizaran tareas asociadas
+      con la inteligencia humana.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Nuevo campo de investigación
+      dedicado a sistemas capaces de razonar, aprender y resolver problemas.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> La inteligencia artificial comenzó a
+      establecerse como un área propia dentro de la informática y las ciencias
+      de la computación.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Este campo evolucionaría desde
+      sistemas basados en reglas hasta aprendizaje automático, redes neuronales
+      y modelos generativos.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Dartmouth+1956+artificial+intelligence"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:John_McCarthy_(computer_scientist)"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://ai.dartmouth.edu/our-story"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 18 -->
+<article class="evento">
+  <div class="fecha">1958–1959</div>
+  <div class="tarjeta">
+    <span class="categoria">Circuitos integrados</span>
+    <h2>El circuito integrado</h2>
+    <p><strong>Personajes:</strong> Jack Kilby y Robert Noyce</p>
+
+    <p>
+      Jack Kilby y Robert Noyce desarrollaron de manera independiente
+      soluciones para integrar múltiples componentes electrónicos en un
+      mismo pequeño dispositivo semiconductor.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Circuito integrado.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Permitió colocar varios componentes
+      electrónicos en un espacio mucho menor, acelerando la miniaturización
+      de los equipos electrónicos.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Los circuitos integrados fueron
+      esenciales para desarrollar microprocesadores, computadoras personales,
+      teléfonos inteligentes y sistemas de inteligencia artificial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Jack+Kilby+integrated+circuit"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Integrated_circuits"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.nobelprize.org/prizes/physics/2000/kilby/facts/"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 19 -->
+<article class="evento">
+  <div class="fecha">1969</div>
+  <div class="tarjeta">
+    <span class="categoria">Redes</span>
+    <h2>ARPANET: el comienzo de Internet</h2>
+    <p>
+      <strong>Personajes:</strong> Leonard Kleinrock, investigadores de UCLA
+      y equipos de ARPA
+    </p>
+
+    <p>
+      ARPANET conectó inicialmente diferentes centros de investigación
+      utilizando una red de computadoras basada en conmutación de paquetes.
+      En 1969 se realizó una de las primeras transmisiones entre UCLA y
+      el Stanford Research Institute.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Redes de computadoras y conmutación
+      de paquetes.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Demostró que computadoras ubicadas en
+      diferentes lugares podían comunicarse a través de una red.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> ARPANET fue un antecedente
+      fundamental de Internet y de la comunicación global entre computadoras.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=ARPANET+1969+first+message"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:ARPANET"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.lk.cs.ucla.edu/internet_first_words.html"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 20 -->
+<article class="evento">
+  <div class="fecha">1971</div>
+  <div class="tarjeta">
+    <span class="categoria">Microprocesador</span>
+    <h2>Intel 4004: el primer microprocesador comercial</h2>
+    <p>
+      <strong>Personajes:</strong> Federico Faggin, Ted Hoff,
+      Stan Mazor y Masatoshi Shima
+    </p>
+
+    <p>
+      Intel presentó el 4004, un microprocesador que integraba las funciones
+      de procesamiento de una computadora en un solo pequeño chip.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Microprocesador de 4 bits.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> La integración del procesador en un chip
+      permitió avanzar hacia computadoras cada vez más pequeñas y económicas.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Los microprocesadores hicieron
+      posible la expansión de las computadoras personales, dispositivos
+      electrónicos, teléfonos inteligentes y sistemas informáticos modernos.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Intel+4004+1971+history"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Intel_4004"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.intel.com/content/www/us/en/history/virtual-vault/articles/the-intel-4004.html"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article><!-- EVENTO 21 -->
+<article class="evento">
+  <div class="fecha">1981</div>
+  <div class="tarjeta">
+    <span class="categoria">Computadora personal</span>
+    <h2>IBM PC 5150</h2>
+    <p><strong>Personajes:</strong> Don Estridge, William Lowe y equipo de IBM</p>
+
+    <p>
+      IBM presentó el IBM Personal Computer 5150, una computadora personal
+      destinada al mercado empresarial y doméstico.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Computadora personal de arquitectura abierta.</p>
+
+    <p>
+      <strong>Importancia:</strong> El IBM PC ayudó a popularizar las
+      computadoras personales y estableció una plataforma que se convirtió
+      en un estándar de la industria.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La expansión de las computadoras
+      personales aumentó enormemente el número de personas capaces de utilizar
+      programas, almacenar información y conectarse posteriormente a Internet.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=IBM+PC+5150+1981"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:IBM_Personal_Computer"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.ibm.com/history/personal-computer"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 22 -->
+<article class="evento">
+  <div class="fecha">1983</div>
+  <div class="tarjeta">
+    <span class="categoria">Internet</span>
+    <h2>TCP/IP se convierte en la base de Internet</h2>
+    <p><strong>Personajes:</strong> Vinton Cerf, Robert Kahn y comunidades de ingeniería</p>
+
+    <p>
+      El conjunto de protocolos TCP/IP comenzó a utilizarse de forma
+      generalizada en ARPANET, permitiendo que diferentes redes pudieran
+      comunicarse entre sí.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Protocolos TCP/IP.</p>
+
+    <p>
+      <strong>Importancia:</strong> TCP/IP proporcionó una forma común para
+      conectar redes diferentes y transportar información entre ellas.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Estos protocolos se convirtieron
+      en una pieza fundamental de Internet y permitieron su crecimiento hasta
+      convertirse en una red mundial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=TCP+IP+1983+Internet+history"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Vint_Cerf"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.internetsociety.org/internet/history-internet/short-history-of-the-internet/"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 23 -->
+<article class="evento">
+  <div class="fecha">1984</div>
+  <div class="tarjeta">
+    <span class="categoria">Interfaz gráfica</span>
+    <h2>Macintosh y la interfaz gráfica de usuario</h2>
+    <p><strong>Personajes:</strong> Steve Jobs, Jef Raskin y equipo Macintosh</p>
+
+    <p>
+      Apple presentó el Macintosh, una computadora personal que ayudó a
+      popularizar el uso de una interfaz gráfica basada en ventanas,
+      iconos y un mouse.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Interfaz gráfica de usuario (GUI).</p>
+
+    <p>
+      <strong>Importancia:</strong> Facilitó el uso de las computadoras para
+      personas que no necesitaban conocimientos avanzados de comandos.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Las interfaces gráficas
+      evolucionaron hasta las interfaces modernas utilizadas en computadoras,
+      teléfonos inteligentes y aplicaciones digitales.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Apple+Macintosh+1984+launch"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Macintosh_128K"
+         target="_blank">🖼️ Imágenes</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 24 -->
+<article class="evento">
+  <div class="fecha">1989–1993</div>
+  <div class="tarjeta">
+    <span class="categoria">World Wide Web</span>
+    <h2>Nace la World Wide Web</h2>
+    <p><strong>Personajes:</strong> Tim Berners-Lee y Robert Cailliau</p>
+
+    <p>
+      Tim Berners-Lee propuso en 1989 un sistema para compartir información
+      entre investigadores. Posteriormente desarrolló tecnologías fundamentales
+      de la Web, como HTML, HTTP y las URL.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> World Wide Web, HTML, HTTP y URL.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> La Web hizo mucho más sencillo acceder y
+      compartir información mediante documentos conectados por hipervínculos.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La Web impulsó el crecimiento
+      de sitios, servicios digitales, comercio electrónico, redes sociales
+      y posteriormente grandes cantidades de datos utilizados por sistemas
+      de inteligencia artificial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Tim+Berners-Lee+World+Wide+Web+history"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Tim_Berners-Lee"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://home.cern/science/computing/birth-web"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 25 -->
+<article class="evento">
+  <div class="fecha">2006</div>
+  <div class="tarjeta">
+    <span class="categoria">Computación en la nube</span>
+    <h2>La expansión del Cloud Computing</h2>
+    <p><strong>Personajes:</strong> Pioneros de la computación en la nube y equipos de Amazon Web Services</p>
+
+    <p>
+      La aparición de servicios de infraestructura bajo demanda permitió
+      utilizar capacidad de cómputo, almacenamiento y otros recursos a través
+      de Internet sin que cada usuario tuviera que mantener toda la
+      infraestructura físicamente.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Computación en la nube.</p>
+
+    <p>
+      <strong>Importancia:</strong> Permitió que empresas y desarrolladores
+      pudieran utilizar recursos informáticos de manera flexible y a gran escala.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> La nube se convirtió en una
+      infraestructura fundamental para aplicaciones web, almacenamiento de
+      grandes cantidades de datos y entrenamiento y funcionamiento de sistemas
+      modernos de inteligencia artificial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=cloud+computing+history+2006"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Cloud_computing"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://aws.amazon.com/about-aws/our-origins/"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article><!-- EVENTO 26 -->
+<article class="evento">
+  <div class="fecha">2007</div>
+  <div class="tarjeta">
+    <span class="categoria">Computación móvil</span>
+    <h2>iPhone y la revolución del teléfono inteligente</h2>
+    <p><strong>Personaje:</strong> Steve Jobs y equipo de Apple</p>
+
+    <p>
+      Apple presentó el iPhone, un dispositivo que combinó teléfono,
+      reproductor multimedia y acceso a Internet con una interfaz
+      táctil.
+    </p>
+
+    <p><strong>Tecnología o aporte:</strong> Pantalla multitáctil y computación móvil.</p>
+
+    <p>
+      <strong>Importancia:</strong> Ayudó a transformar el teléfono móvil
+      en una plataforma informática utilizada diariamente para comunicarse,
+      consultar información y ejecutar aplicaciones.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Los teléfonos inteligentes
+      facilitaron el acceso masivo a Internet, aplicaciones, servicios
+      digitales y posteriormente herramientas de inteligencia artificial.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=iPhone+2007+Steve+Jobs+launch"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:IPhone"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://www.apple.com/newsroom/2007/01/09Apple-Reinvents-the-Phone/"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 27 -->
+<article class="evento">
+  <div class="fecha">2012</div>
+  <div class="tarjeta">
+    <span class="categoria">Aprendizaje profundo</span>
+    <h2>AlexNet impulsa el aprendizaje profundo</h2>
+    <p>
+      <strong>Personajes:</strong> Alex Krizhevsky, Ilya Sutskever
+      y Geoffrey Hinton
+    </p>
+
+    <p>
+      AlexNet fue una red neuronal convolucional que obtuvo resultados
+      sobresalientes en el reconocimiento de imágenes mediante aprendizaje
+      profundo.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Redes neuronales profundas
+      entrenadas con grandes cantidades de datos y capacidad de cómputo.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Contribuyó a demostrar el enorme potencial
+      práctico del aprendizaje profundo para tareas de reconocimiento
+      y clasificación.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Este avance ayudó a impulsar
+      una nueva generación de sistemas de IA basados en redes neuronales
+      profundas.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=AlexNet+2012+deep+learning"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Artificial_neural_network"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks"
+         target="_blank">📚 Investigación</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 28 -->
+<article class="evento">
+  <div class="fecha">2017</div>
+  <div class="tarjeta">
+    <span class="categoria">IA moderna</span>
+    <h2>Los Transformers cambian el procesamiento del lenguaje</h2>
+    <p>
+      <strong>Personajes:</strong> Ashish Vaswani y colaboradores
+    </p>
+
+    <p>
+      Investigadores publicaron el trabajo
+      <em>Attention Is All You Need</em>, que presentó la arquitectura
+      Transformer basada en mecanismos de atención.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Arquitectura Transformer
+      y mecanismo de atención.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> Los Transformers permitieron procesar
+      relaciones entre diferentes partes de un texto de manera muy eficiente
+      y se convirtieron en una arquitectura fundamental para numerosos
+      modelos modernos de inteligencia artificial.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Esta arquitectura fue clave
+      para el desarrollo de grandes modelos de lenguaje y sistemas de IA
+      generativa.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=Transformer+architecture+Attention+Is+All+You+Need"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:Transformers_(machine_learning)"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://arxiv.org/abs/1706.03762"
+         target="_blank">📚 Investigación</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- EVENTO 29 -->
+<article class="evento">
+  <div class="fecha">2022</div>
+  <div class="tarjeta">
+    <span class="categoria">IA generativa</span>
+    <h2>ChatGPT y la llegada masiva de la IA generativa</h2>
+    <p><strong>Organización:</strong> OpenAI</p>
+
+    <p>
+      En 2022 se lanzó ChatGPT, un sistema conversacional basado en modelos
+      de lenguaje que permitió a millones de personas interactuar con
+      inteligencia artificial mediante lenguaje natural.
+    </p>
+
+    <p>
+      <strong>Tecnología o aporte:</strong> Modelos de lenguaje y generación
+      de texto mediante inteligencia artificial.
+    </p>
+
+    <p>
+      <strong>Importancia:</strong> La IA generativa pasó de ser principalmente
+      una tecnología especializada a convertirse en una herramienta accesible
+      para el público general.
+    </p>
+
+    <p>
+      <strong>Relación con el futuro:</strong> Representa una etapa actual
+      de la evolución iniciada con la necesidad humana de comunicar y
+      almacenar información, pasando por la computación, Internet y el
+      aprendizaje automático.
+    </p>
+
+    <div class="recursos">
+      <a href="https://www.youtube.com/results?search_query=ChatGPT+2022+OpenAI+history"
+         target="_blank">🎥 Video</a>
+
+      <a href="https://commons.wikimedia.org/wiki/Category:ChatGPT"
+         target="_blank">🖼️ Imágenes</a>
+
+      <a href="https://openai.com/index/chatgpt/"
+         target="_blank">📚 Fuente</a>
+    </div>
+  </div>
+</article>
+
+
+<!-- CIERRE DE LA LÍNEA DEL TIEMPO -->
+</main>
+
+<section class="contenedor">
+  <div class="tarjeta final">
+    <span class="categoria">Conclusión</span>
+    <h2>De la información humana a la inteligencia artificial</h2>
+
+    <p>
+      La historia de la computación puede entenderse como una búsqueda
+      constante por almacenar, transmitir, procesar y utilizar información
+      de manera cada vez más rápida y eficiente.
+    </p>
+
+    <p>
+      Desde los primeros símbolos y la escritura, pasando por las máquinas
+      mecánicas, los circuitos electrónicos, las computadoras, Internet y
+      los teléfonos inteligentes, cada etapa construyó las bases de la
+      siguiente.
+    </p>
+
+    <p>
+      La inteligencia artificial representa una nueva etapa de este proceso:
+      las máquinas ya no solamente almacenan y procesan información, sino
+      que pueden aprender patrones y generar contenido.
+    </p>
+
+    <div class="frase-final">
+      "La historia de la tecnología también es la historia de nuestra
+      búsqueda por ampliar las capacidades humanas."
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    Línea del tiempo: De la información humana a la inteligencia artificial
+  </p>
+  <p>
+    Proyecto educativo • 29 acontecimientos históricos
+  </p>
+</footer>
+
+</body>
+</html>
